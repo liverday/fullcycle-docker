@@ -1,0 +1,25 @@
+version: '3'
+
+networks:
+  mynet:
+    driver: bridge
+
+services:
+  nginx:
+    container_name: fullcycle_nginx
+    build: nginx
+    ports:
+      - 8080:80
+    depends_on:
+      - api
+    networks:
+      - mynet
+  api:
+    container_name: fullcycle_api
+    build: golang
+    environment:
+      PORT: 3000
+    ports:
+      - 3001:3000
+    networks:
+      - mynet
